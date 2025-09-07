@@ -22,7 +22,8 @@ public class RegisterPage {
 	private final By email = By.id("input-email");
 	private final By telephone = By.id("input-telephone");
 	private final By password = By.id("input-password");
-	private final By confirmpassword = By.id("input-confirm");
+	private final By confirmpassword = By.id("input-confirm"); 
+	private final By dummy = By.id("dummy");
 
 	private final By subscribeYes = By.xpath("(//label[@class='radio-inline'])[position()=1]/input[@type='radio']");
 	private final By subscribeNo = By.xpath("(//label[@class='radio-inline'])[position()=2]/input[@type='radio']");
