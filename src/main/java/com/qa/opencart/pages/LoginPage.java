@@ -34,7 +34,7 @@ public class LoginPage {
 
 	
 	
-	@Step("This logic method to get title from login page")
+	@Step("This logic method to get title from login pages")
 	public String getLoginPageTitle() {
 		String title = eleUtil.waitForTitleIs(AppConstants.LOGIN_PAGE_TITLE, AppConstants.DEFAULT_SHORT_WAIT);
 //		System.out.println("login page title: " + title);
