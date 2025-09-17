@@ -38,13 +38,13 @@
 -->	
 	
 
-	<!--<test name="Accounts Page Test">
+	<test name="Accounts Page Test">
 	<parameter name="browser" value="edge" />
 
 		<classes>
 			<class name="com.qa.opencart.tests.AccountsPageTest" />
 		</classes>
-	</test>-->
+	</test>
 
 <!--	<test name="Search Test">
 		<parameter name="browser" value="edge" />
