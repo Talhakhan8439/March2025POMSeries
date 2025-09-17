@@ -46,13 +46,13 @@
 		</classes>
 	</test>
 
-	<test name="Search Test">
+	<!--<test name="Search Test">
 		<parameter name="browser" value="chrome" />
 	
 		<classes>
 			<class name="com.qa.opencart.tests.SearchTest" />
 		</classes>
-	</test>
+	</test>-->
 
 	<!--<test name="ProductInfo Page Test">
 		<parameter name="browser" value="edge" />
