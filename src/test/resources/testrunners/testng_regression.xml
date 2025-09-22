@@ -11,56 +11,56 @@
 
 </listeners>
 
-	<!--<test name="Login Page Test_chrome">
+	<test name="Login Page Test_chrome">
 	<parameter name="browser" value="chrome" />
 	
 		<classes>
 			<class name="com.qa.opencart.tests.LoginPageTest" />
 		</classes>
 	</test>
-	-->
 	
-	<!--<test name="Login Page Test_firefox">
-	<parameter name="browser" value="firefox" />
+	
+<!--	<test name="Login Page Test_firefox">
+	<parameter name="browser" value="chrome" />
 	
 		<classes>
 			<class name="com.qa.opencart.tests.LoginPageTest" />
 		</classes>
-	</test-->>
+	</test>
 	
-	<!--s<test name="Login Page Test_edge">
+	<test name="Login Page Test_edge">
 	<parameter name="browser" value="edge" />
 	
 		<classes>
 			<class name="com.qa.opencart.tests.LoginPageTest" />
 		</classes>
-	</test>-->
-	
+	</test>
+-->	
 	
 
 	<!--<test name="Accounts Page Test">
-	<parameter name="browser" value="firefox" />
+	<parameter name="browser" value="edge" />
 
 		<classes>
 			<class name="com.qa.opencart.tests.AccountsPageTest" />
 		</classes>
 	</test>-->
 
-	<!--<test name="Search Test">
-		<parameter name="browser" value="chrome" />
+<!--	<test name="Search Test">
+		<parameter name="browser" value="edge" />
 	
 		<classes>
 			<class name="com.qa.opencart.tests.SearchTest" />
 		</classes>
-	</test>-->
-
-	<test name="ProductInfo Page Test">
+	</test>
+-->
+	<!--<test name="ProductInfo Page Test">
 		<parameter name="browser" value="edge" />
 	
 		<classes>
 			<class name="com.qa.opencart.tests.ProductInfoTest" />
 		</classes>
-	</test>
+	</test>-->
 
 <!--	<test name="Register Page Test">
 		<parameter name="browser" value="chrome" />
@@ -68,6 +68,8 @@
 		<classes>
 			<class name="com.qa.opencart.tests.RegisterPageTest" />
 		</classes>
--->
+	</test>-->
+
+
 </suite>	
 
