@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
@@ -14,6 +16,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 import com.qa.opencart.errors.AppError;
@@ -37,35 +40,59 @@ public class DriverFactory {
 
 		log.info("browser name : " + browserName);
 
-		optionsManager = new OptionsManager(prop);
+		optionsManager = new OptionsManager(prop); 
+		
+		
+
+		boolean remoteExecution = Boolean.parseBoolean(prop.getProperty("remote").trim()); 
+		
 
 		switch (browserName.trim().toLowerCase()) {
 		case "chrome":
-//		driver = new ChromeDriver(); 
-			tldriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
+			if (remoteExecution) {
+ 
+				System.out.println("in remote block");
+				// run tcs on remote - grid
+				init_remoteDriver("chrome");
+
+			} else { 
+				System.out.println("in local block");
+				// run tcs in local
+				tldriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
+			}
 			break;
 		case "firefox":
-//		driver = new FirefoxDriver(); 
-			tldriver.set(new FirefoxDriver(optionsManager.getFirefoxOptions()));
+			if (remoteExecution) {
+
+				// run tcs on remote - grid
+				init_remoteDriver("firefox");
+
+			} else {
+				// run tcs in local
+				tldriver.set(new FirefoxDriver(optionsManager.getFirefoxOptions()));
+			}
 			break;
 		case "edge":
-//		driver = new EdgeDriver();
-			tldriver.set(new EdgeDriver(optionsManager.getEdgeOptions()));
+
+			if (remoteExecution) {
+
+				// run tcs on remote - grid
+				init_remoteDriver("edge");
+
+			} else {
+				tldriver.set(new EdgeDriver(optionsManager.getEdgeOptions()));
+			}
 			break;
 		case "safari":
-//			driver = new SafariDriver();
+
 			tldriver.set(new SafariDriver());
 			break;
 
 		default:
-//			System.out.println(AppError.INVALID_BROWSER_MESG + " : " + browserName);
+
 			log.error(AppError.INVALID_BROWSER_MESG + " : " + browserName);
 			throw new FrameworkException("=====INVALID BROWSER====");
 		}
-
-//		driver.manage().deleteAllCookies();
-//		driver.manage().window().maximize();
-//		driver.get(prop.getProperty("url"));
 
 		getDriver().manage().deleteAllCookies();
 		getDriver().manage().window().maximize();
@@ -74,6 +101,37 @@ public class DriverFactory {
 		return getDriver();
 
 	}
+
+	private void init_remoteDriver(String browserName) {
+		log.info("Running tests on selenoum grid --"+ browserName);
+
+		try {
+			switch (browserName) {
+			case "chrome":
+				tldriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getChromeOptions()));
+				break;
+				
+			case "firefox":
+				tldriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getFirefoxOptions()));
+				break;
+				
+			case "edge":
+				tldriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getEdgeOptions()));
+				break;
+				
+			default:
+				log.error("Plz supply the right browser name for selenium grid....");
+				FrameworkException fe = new FrameworkException(AppError.INVALID_BROWSER_MESG + " : " + browserName);
+				log.error("Exception occurred while initializing driver: ", fe);
+				throw new FrameworkException("=====INVALID BROWSER====");
+			}
+		} 
+		catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 
 	public static WebDriver getDriver() {
 		return tldriver.get();
@@ -87,13 +145,11 @@ public class DriverFactory {
 		String envName = System.getProperty("env");
 		log.info("Env name =========================================================================>" + envName);
 
-
 		try {
 			if (envName == null) {
 				log.warn("no env.. is passed, hence running tcs on QA environment...by default..");
 				ip = new FileInputStream("./src/test/resources/config/config.qa.properties");
-			} 
-		
+			}
 
 			else {
 				switch (envName.trim().toLowerCase()) {
@@ -115,11 +171,10 @@ public class DriverFactory {
 				default:
 					log.error("Env value is invalid...plz pass the right env value..");
 					throw new FrameworkException("====INVALID ENVIRONMENT====");
-				} 
-				
-			} 
-		}
-			 catch (FileNotFoundException e) {
+				}
+
+			}
+		} catch (FileNotFoundException e) {
 
 			e.printStackTrace();
 
